@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phrida – Music Player App</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg-light: #fff;
+      --bg-dark: #000;
+      --text-light: #222;
+      --text-dark: #f8fafc;
+      --container-light: #fff;
+      --container-dark: #18181b;
+      --subtitle-light: #64748b;
+      --subtitle-dark: #a1a1aa;
+      --footer-light: #94a3b8;
+      --footer-dark: #64748b;
+      --feature-bg-light: #f1f5f9;
+      --feature-bg-dark: #23232b;
+      --feature-border-light: #e5e7eb;
+      --feature-border-dark: #2d2d36;
+      --button-bg-light: #3b82f6;
+      --button-bg-dark: #2563eb;
+      --button-text-light: #fff;
+      --button-text-dark: #fff;
+      --button-hover-light: #2563eb;
+      --button-hover-dark: #1e40af;
+    }
+    body {
+      font-family: system-ui, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    .container {
+      background: var(--container-light);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      padding: 2rem 2.5rem 1.5rem 2.5rem;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      transition: background 0.3s;
+    }
+    body.dark .container {
+      background: var(--container-dark);
+    }
+    .theme-toggle {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      font-size: 1.7em;
+      cursor: pointer;
+      color: #3b82f6;
+      z-index: 10;
+      transition: color 0.2s;
+    }
+    .theme-toggle:focus {
+      outline: none;
+    }
+    .logo {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 1em;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      user-select: none;
+    }
+    h1 {
+      color: #3b82f6;
+      margin-bottom: 0.5em;
+    }
+    .subtitle {
+      color: var(--subtitle-light);
+      margin-bottom: 1.5em;
+    }
+    body.dark .subtitle {
+      color: var(--subtitle-dark);
+    }
+    .appstore-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6em;
+      margin: 0.5em auto 1.5em auto;
+      padding: 0.7em 1.5em;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1em;
+      font-weight: 600;
+      background: var(--button-bg-light);
+      color: var(--button-text-light);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+    }
+    .appstore-btn:hover, .appstore-btn:focus {
+      background: var(--button-hover-light);
+      color: var(--button-text-light);
+      outline: none;
+    }
+    body.dark .appstore-btn {
+      background: var(--button-bg-dark);
+      color: var(--button-text-dark);
+    }
+    body.dark .appstore-btn:hover, body.dark .appstore-btn:focus {
+      background: var(--button-hover-dark);
+      color: var(--button-text-dark);
+    }
+    .appstore-icon {
+      width: 1.3em;
+      height: 1.3em;
+      vertical-align: middle;
+      fill: currentColor;
+      display: inline-block;
+    }
+    .features {
+      margin: 2em 0 1.5em 0;
+      text-align: left;
+    }
+    .features-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-bottom: 0.7em;
+      color: #3b82f6;
+    }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .feature-list li {
+      background: var(--feature-bg-light);
+      border: 1px solid var(--feature-border-light);
+      border-radius: 8px;
+      margin-bottom: 0.7em;
+      padding: 0.7em 1em;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+    }
+    .feature-list li:last-child {
+      margin-bottom: 0;
+    }
+    .feature-icon {
+      font-size: 1.2em;
+      color: #3b82f6;
+      flex-shrink: 0;
+    }
+    body.dark .feature-list li {
+      background: var(--feature-bg-dark);
+      border: 1px solid var(--feature-border-dark);
+    }
+    .footer {
+      margin-top: 2em;
+      font-size: 0.9em;
+      color: var(--footer-light);
+    }
+    body.dark .footer {
+      color: var(--footer-dark);
+    }
+    .contact {
+      margin-top: 1.5em;
+      font-size: 0.98em;
+      color: var(--subtitle-light);
+      text-align: left;
+    }
+    body.dark .contact {
+      color: var(--subtitle-dark);
+    }
+    .contact strong {
+      color: #3b82f6;
+    }
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 500px) {
+      .container {
+        padding: 1.2rem 0.5rem;
+        max-width: 98vw;
+      }
+      .theme-toggle {
+        top: 0.7rem;
+        right: 0.7rem;
+        font-size: 1.3em;
+      }
+      .appstore-btn {
+        font-size: 1em;
+        padding: 0.6em 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="theme-toggle" id="themeToggleBtn" title="Toggle dark/light mode" aria-label="Toggle dark/light mode">🌙</button>
+    <img id="logo" class="logo" src="logo-light.png" alt="Phrida App Logo" draggable="false">
+    <h1>Phrida</h1>
+    <div class="subtitle">A beautiful, privacy-first music player for iOS</div>
+    <a href="https://apps.apple.com/it/app/phrida/id6746702551" target="_blank" rel="noopener" class="appstore-btn" id="appstoreBtn">
+      <svg class="appstore-icon" viewBox="0 0 24 24"><path d="M17.564 13.222c-.019-2.019 1.652-2.99 1.726-3.037-0.941-1.376-2.404-1.565-2.921-1.587-1.242-.126-2.426.728-3.058.728-.633 0-1.606-.71-2.644-.69-1.36.02-2.617.789-3.316 2.008-1.414 2.448-.361 6.065 1.012 8.05.671.97 1.47 2.06 2.522 2.02.999-.04 1.376-.646 2.583-.646 1.207 0 1.541.646 2.6.626 1.076-.02 1.753-.99 2.419-1.963.682-.991.963-1.954.982-2.004-.021-.01-1.89-.726-1.91-2.88zm-2.23-5.41c.555-.672.93-1.606.827-2.542-.8.032-1.765.532-2.34 1.204-.514.594-.966 1.543-.797 2.448.845.066 1.755-.482 2.31-1.11z"/></svg>
+      Download on the App Store
+    </a>
+    <div class="features">
+      <div class="features-title">Highlights</div>
+      <ul class="feature-list">
+        <li><span class="feature-icon">⚡️</span>Blazing-fast library browsing, even with 10,000+ songs</li>
+        <li><span class="feature-icon">🎨</span>Beautiful Now Playing with dynamic backgrounds & large cover art</li>
+        <li><span class="feature-icon">📝</span>Lyrics on demand—fetch lyrics with a tap</li>
+        <li><span class="feature-icon">🖼️</span>High-quality artist pictures, customizable by you</li>
+        <li><span class="feature-icon">📻</span>Chromecast & AirPlay support—cast to any room</li>
+        <li><span class="feature-icon">🛠️</span>Deep customization: colors, styles, tabs, gradients</li>
+        <li><span class="feature-icon">🔒</span>100% offline & private—no accounts, no trackers</li>
+        <li><span class="feature-icon">🚫</span>Free to try, one-time purchase to remove ads forever</li>
+        <li><span class="feature-icon">👨‍👩‍👧‍👦</span>Family Sharing: Premium unlocks on all your devices</li>
+      </ul>
+    </div>
+    <div class="contact">
+      <strong>Contact:</strong><br>
+      General: <a href="mailto:app.phrida@icloud.com">app.phrida@icloud.com</a><br>
+      Support: <a href="mailto:support.phrida@icloud.com">support.phrida@icloud.com</a>
+    </div>
+    <div class="footer">
+      &copy; 2024 Phrida App &nbsp;|&nbsp;
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <script>
+    // Theme toggle logic
+    const btn = document.getElementById('themeToggleBtn');
+    const logo = document.getElementById('logo');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    let theme = localStorage.getItem('theme') || (prefersDark.matches ? 'dark' : 'light');
+
+    function setTheme(newTheme) {
+      theme = newTheme;
+      document.body.className = theme === 'dark' ? 'dark' : '';
+      localStorage.setItem('theme', theme);
+      updateLogo();
+      updateButton();
+    }
+
+    function updateLogo() {
+      logo.src = theme === 'dark' ? 'logo-dark.png' : 'logo-light.png';
+    }
+
+    function updateButton() {
+      btn.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+      btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+      btn.setAttribute('aria-label', btn.title);
+    }
+
+    btn.addEventListener('click', () => {
+      setTheme(theme === 'dark' ? 'light' : 'dark');
+    });
+
+    // On load, set theme, logo, and button
+    setTheme(theme);
+
+    // If user changes system theme, update automatically (unless overridden)
+    prefersDark.addEventListener('change', e => {
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+  </script>
+</body>
+</html>
